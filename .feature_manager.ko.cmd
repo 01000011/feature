@@ -1,1 +1,0 @@
-cmd_ztuff/features/feature_manager.ko := arm-linux-gnueabi-ld -EL -r  -T /apps/bbb/kernel/kernel/scripts/module-common.lds --build-id  -o ztuff/features/feature_manager.ko ztuff/features/feature_manager.o ztuff/features/feature_manager.mod.o
