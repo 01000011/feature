@@ -7,51 +7,46 @@
 
 #include <linux/vmalloc.h>
 #include <asm/uaccess.h>
-#include "sensor_manager.h"
+#include "hardware_manager.h"
 
-static struct reg_info *reginfo;
+static struct notification_item *no_item;
 static dev_t devt;
 static struct cdev c_dev;
 static struct class *clss;
-static struct reg_info *reginfo;
 
-static int sensor_open(struct inode *, struct file *);
-static int sensor_release(struct inode *, struct file *);
-static ssize_t sensor_read(struct file *, char *, size_t, loff_t *);
-
-struct reg_info
-{
-	struct sensor *sensor;
-};
+static int hardware_open(struct inode *, struct file *);
+static int hardware_release(struct inode *, struct file *);
+static ssize_t hardware_read(struct file *, char *, size_t, loff_t *);
 
 static struct file_operations fops = 
 {
-	.read = sensor_read,
-	.open = sensor_open,
-	.release = sensor_release
+	.read = hardware_read,
+	.open = hardware_open,
+	.release = hardware_release
 };
 
-static int sensor_open(struct inode *inode, struct file *file)
+static int hardware_open(struct inode *inode, struct file *file)
 {
 	return SUCCESS;
 }
 
-static int sensor_release(struct inode *inode, struct file *file)
+static int hardware_release(struct inode *inode, struct file *file)
 {
 	return SUCCESS;
 }
 
-static ssize_t sensor_read(struct file *file, char *buffer, size_t length, loff_t *offset)
+static ssize_t hardware_read(struct file *file, char *buffer, size_t length, loff_t *offset)
 {
-        float *results = reginfo->sensor->read();
+	return 0;
+        /*float *results = reginfo->sensor->read();
 	put_user(*(results), buffer);	
-	return sizeof(*results);
+	return sizeof(*results)*/
 }
 
-int reg_device(struct sensor* sensor)
+int register_notification_item(struct notification_item *noti_item)
 {
-	printk(KERN_INFO "Registering sensor '%s'", sensor->name);
-	if (device_create(clss, NULL, devt, NULL, sensor->name) == NULL)
+	printk(KERN_INFO "Registering notification item '%s'", noti_item->name);
+	if (device_create(clss, NULL, devt, NULL, noti_item->name) == NULL)
 	{
 		class_destroy(clss);
 		unregister_chrdev_region(devt, 1);
@@ -66,11 +61,11 @@ int reg_device(struct sensor* sensor)
 		unregister_chrdev_region(devt, 1);
 		return -1;
 	}
-	reginfo = (struct reg_info*)vmalloc(sizeof(struct reg_info));
-	reginfo->sensor = sensor;	
+	no_item = (struct notification_item*)vmalloc(sizeof(struct notification_item));
+	no_item = noti_item;	
 	return 0;	
 }
-EXPORT_SYMBOL(reg_device);
+EXPORT_SYMBOL(register_notification_item);
 
 static int __init constructor(void)
 {
@@ -80,7 +75,7 @@ static int __init constructor(void)
                 return -1;
         }
 
-        if ((clss = class_create(THIS_MODULE, DEVICE_NAME)) == NULL)
+        if ((clss = class_create(THIS_MODULE, NOTIFICATION_MANAGER)) == NULL)
         {
                 unregister_chrdev_region(devt, 1);
                 return -1;

@@ -8,10 +8,16 @@
 #define SUCCESS     0
 #define APPLICATION_NAME "daas hardware manager"
 #define DEVICE_NAME "sensor"
+#define NOTIFICATION_MANAGER "nm"
 struct notification_item
 {
+	char name[32];	
 	void (*on)(void);
 	void (*reset)(void);
 	uint (*is_messageable)(void);
-	void (*message)(cahr*);
+	void (*message)(char*);
 };
+
+static int hardware_open(struct inode *, struct file *);
+static int hardware_release(struct inode *, struct file *);
+static ssize_t hardware_read(struct file *, char *, size_t, loff_t *);
