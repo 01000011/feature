@@ -6,7 +6,6 @@
 #include <linux/types.h>
 #include <linux/kdev_t.h>
 #include <linux/fs.h>
-#include "led.h"
 #define GPIO1_START       0x4804C000
 #define GPIO1_END         0x4804CFFF
 #define GPIO_SETDATAOUT   GPIO1_START | 0x194
@@ -58,3 +57,25 @@ void off()
 	iounmap(gpio_cleardataout);
 	release_mem_region(GPIO1_START, GPIO1_END - GPIO1_START);
 }
+static int __init constructor(void)
+{
+        printk(KERN_INFO "Sensor manager start");
+        if (alloc_chrdev_region(&devt, 0, 1, DEVICE_NAME) < 0)
+        {
+                return -1;
+        }
+
+        if ((clss = class_create(THIS_MODULE, CLASS)) == NULL)
+        {
+                unregister_chrdev_region(devt, 1);
+                return -1;
+        }
+        printk(KERN_INFO "Sensor manager complete");
+        return 0;
+}
+
+static void __exit deconstructor(void)
+{
+}
+module_init(constructor);
+module_exit(deconstructor);
