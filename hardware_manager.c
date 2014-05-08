@@ -14,9 +14,9 @@ static dev_t devt;
 static struct cdev c_dev;
 static struct class *clss;
 
-static int hardware_open(struct inode *, struct file *);
-static int hardware_release(struct inode *, struct file *);
-static ssize_t hardware_read(struct file *, char *, size_t, loff_t *);
+//static int hardware_open(struct inode *, struct file *);
+//static int hardware_release(struct inode *, struct file *);
+//static ssize_t hardware_read(struct file *, char *, size_t, loff_t *);
 
 static struct file_operations fops = 
 {
@@ -25,17 +25,17 @@ static struct file_operations fops =
 	.release = hardware_release
 };
 
-static int hardware_open(struct inode *inode, struct file *file)
+int hardware_open(struct inode *inode, struct file *file)
 {
 	return SUCCESS;
 }
 
-static int hardware_release(struct inode *inode, struct file *file)
+int hardware_release(struct inode *inode, struct file *file)
 {
 	return SUCCESS;
 }
 
-static ssize_t hardware_read(struct file *file, char *buffer, size_t length, loff_t *offset)
+ssize_t hardware_read(struct file *file, char *buffer, size_t length, loff_t *offset)
 {
 	return 0;
         /*float *results = reginfo->sensor->read();

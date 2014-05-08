@@ -12,12 +12,12 @@
 struct notification_item
 {
 	char name[32];	
-	void (*on)(void);
+	void (*send)(void);
 	void (*reset)(void);
 	uint (*is_messageable)(void);
 	void (*message)(char*);
 };
-
-static int hardware_open(struct inode *, struct file *);
-static int hardware_release(struct inode *, struct file *);
-static ssize_t hardware_read(struct file *, char *, size_t, loff_t *);
+int register_notification_item(struct notification_item*);
+int hardware_open(struct inode *, struct file *);
+int hardware_release(struct inode *, struct file *);
+ssize_t hardware_read(struct file *, char *, size_t, loff_t *);
