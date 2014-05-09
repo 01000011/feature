@@ -38,4 +38,4 @@ __attribute__((section(".modinfo"))) =
 "depends=hardware_manager";
 
 
-MODULE_INFO(srcversion, "2D42F4B2229EA3FC8C85EF5");
+MODULE_INFO(srcversion, "F726A67190F002814235415");

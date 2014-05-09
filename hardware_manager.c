@@ -33,7 +33,8 @@ int hardware_release(struct inode *inode, struct file *file)
 
 ssize_t hardware_read(struct file *file, char *buffer, size_t length, loff_t *offset)
 {
-	return 0;
+no_item->send();	
+return 0;
         /*float *results = reginfo->sensor->read();
 	put_user(*(results), buffer);	
 	return sizeof(*results)*/
@@ -42,7 +43,7 @@ ssize_t hardware_read(struct file *file, char *buffer, size_t length, loff_t *of
 int register_notification_item(struct notification_item *noti_item)
 {
 	printk(KERN_INFO "Registering notification item '%s'", noti_item->name);
-	if (device_create(clss, NULL, devt, NULL, noti_item->name) == NULL)
+	if (device_create(clss, NULL, devt, NULL, NOTIFICATION_MANAGER) == NULL)
 	{
 		class_destroy(clss);
 		unregister_chrdev_region(devt, 1);
@@ -57,6 +58,7 @@ int register_notification_item(struct notification_item *noti_item)
 		unregister_chrdev_region(devt, 1);
 		return -1;
 	}
+	register_chrdev(0, noti_item->name, &fops);
 	no_item = (struct notification_item*)vmalloc(sizeof(struct notification_item));
 	no_item = noti_item;	
 	return 0;	
@@ -71,7 +73,7 @@ static int __init constructor(void)
                 return -1;
         }
 
-        if ((clss = class_create(THIS_MODULE, NOTIFICATION_MANAGER)) == NULL)
+        if ((clss = class_create(THIS_MODULE, APPLICATION_NAME)) == NULL)
         {
                 unregister_chrdev_region(devt, 1);
                 return -1;

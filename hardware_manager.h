@@ -2,9 +2,9 @@
 #define REG_SUC     0
 #define REG_UNSUC  -1
 #define SUCCESS     0
-#define APPLICATION_NAME "daas hardware manager"
+#define APPLICATION_NAME "daas_hw_man"
 #define DEVICE_NAME "sensor"
-#define NOTIFICATION_MANAGER "nm"
+#define NOTIFICATION_MANAGER "notify_man"
 struct notification_item
 {
 	char name[32];	

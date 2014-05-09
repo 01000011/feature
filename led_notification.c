@@ -22,7 +22,7 @@ MODULE_LICENSE("Proprietary");
 
 struct notification_item no_item = 
 {
-	.name = "led notification",
+	.name = "led_notification",
 	.is_messageable = is_messageable,
 	.send = send,
 	.init = init 
