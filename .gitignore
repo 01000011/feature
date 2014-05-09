@@ -2,4 +2,6 @@
 *.ko
 *.builtin
 *.cmd
+*.c~
+*.h~
 *.order

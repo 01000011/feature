@@ -4,7 +4,7 @@
 
 MODULE_INFO(vermagic, VERMAGIC_STRING);
 
-__visible struct module __this_module
+struct module __this_module
 __attribute__((section(".gnu.linkonce.this_module"))) = {
 	.name = KBUILD_MODNAME,
 	.init = init_module,
@@ -19,7 +19,17 @@ MODULE_INFO(intree, "Y");
 static const struct modversion_info ____versions[]
 __used
 __attribute__((section("__versions"))) = {
-	{ 0x5f49e25f, __VMLINUX_SYMBOL_STR(register_notification_item) },
+	{ 0xa60b9ee, "module_layout" },
+	{ 0x5f49e25f, "register_notification_item" },
+	{ 0xadf42bd5, "__request_region" },
+	{ 0x27e1a049, "printk" },
+	{ 0x2e5810c6, "__aeabi_unwind_cpp_pr1" },
+	{ 0x788fe103, "iomem_resource" },
+	{ 0x9bce482f, "__release_region" },
+	{ 0xc2165d85, "__arm_iounmap" },
+	{ 0x40a6f522, "__arm_ioremap" },
+	{ 0xac8f37b2, "outer_cache" },
+	{ 0xefd6cf06, "__aeabi_unwind_cpp_pr0" },
 };
 
 static const char __module_depends[]
@@ -28,4 +38,4 @@ __attribute__((section(".modinfo"))) =
 "depends=hardware_manager";
 
 
-MODULE_INFO(srcversion, "923A3A51C99D0EF6AE8E546");
+MODULE_INFO(srcversion, "2D42F4B2229EA3FC8C85EF5");

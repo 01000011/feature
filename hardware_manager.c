@@ -87,4 +87,4 @@ static void __exit deconstructor(void)
 
 module_init(constructor);
 module_exit(deconstructor);
-
+MODULE_LICENSE("GPL");
