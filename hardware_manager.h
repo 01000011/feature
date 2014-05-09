@@ -1,7 +1,3 @@
-#include <asm/uaccess.h>
-#include <linux/fs.h>
-#include <linux/kernel.h>
-#include <linux/vmalloc.h>
 #define KILL_ERROR -1
 #define REG_SUC     0
 #define REG_UNSUC  -1
@@ -13,7 +9,7 @@ struct notification_item
 {
 	char name[32];	
 	void (*send)(void);
-	void (*reset)(void);
+	void (*init)(void);
 	uint (*is_messageable)(void);
 	void (*message)(char*);
 };

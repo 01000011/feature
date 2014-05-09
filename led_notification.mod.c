@@ -19,7 +19,7 @@ MODULE_INFO(intree, "Y");
 static const struct modversion_info ____versions[]
 __used
 __attribute__((section("__versions"))) = {
-	{ 0x11524096, __VMLINUX_SYMBOL_STR(register_notification_item) },
+	{ 0x5f49e25f, __VMLINUX_SYMBOL_STR(register_notification_item) },
 };
 
 static const char __module_depends[]
@@ -28,4 +28,4 @@ __attribute__((section(".modinfo"))) =
 "depends=hardware_manager";
 
 
-MODULE_INFO(srcversion, "F277F01EDB96A279574B8FF");
+MODULE_INFO(srcversion, "923A3A51C99D0EF6AE8E546");

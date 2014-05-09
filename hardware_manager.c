@@ -14,10 +14,6 @@ static dev_t devt;
 static struct cdev c_dev;
 static struct class *clss;
 
-//static int hardware_open(struct inode *, struct file *);
-//static int hardware_release(struct inode *, struct file *);
-//static ssize_t hardware_read(struct file *, char *, size_t, loff_t *);
-
 static struct file_operations fops = 
 {
 	.read = hardware_read,
@@ -69,7 +65,7 @@ EXPORT_SYMBOL(register_notification_item);
 
 static int __init constructor(void)
 {
-        printk(KERN_INFO "Sensor manager start");
+        printk(KERN_INFO "Hardware manager start");
         if (alloc_chrdev_region(&devt, 0, 1, APPLICATION_NAME) < 0)
         {
                 return -1;
@@ -80,7 +76,7 @@ static int __init constructor(void)
                 unregister_chrdev_region(devt, 1);
                 return -1;
         }
-        printk(KERN_INFO "Sensor manager complete");
+        printk(KERN_INFO "Hardware manager complete");
         return 0;
 }
 
@@ -91,3 +87,4 @@ static void __exit deconstructor(void)
 
 module_init(constructor);
 module_exit(deconstructor);
+

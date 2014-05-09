@@ -25,22 +25,22 @@ struct notification_item no_item =
 	.name = "led notification",
 	.is_messageable = is_messageable,
 	.send = send,
-	.reset = reset 
+	.init = init 
 };
 
 static int __init constructor(void);
 static void __exit destructor(void);
 static void write_to_mem(volatile const void*, const unsigned int);
 static unsigned int read_mem(volatile void*);
-
+static void clear(void);
 uint is_messageable(void)
 {
 	return -1;
 }
 
-void reset(void)
+void init(void)
 {
-	destructor();
+	clear();
 }
 
 void send(void)
@@ -79,7 +79,14 @@ unsigned int read_mem(volatile void* addr)
 {
 	return ioread32((void*)addr);
 }
-
+static void clear(void)
+{
+	volatile void *gpio_cleardataout;
+        gpio_cleardataout = ioremap(GPIO_CLEARDATAOUT, BITS);
+        write_to_mem(gpio_cleardataout, GPIO14);
+        iounmap(gpio_cleardataout);
+        release_mem_region(GPIO1_START, GPIO1_END - GPIO1_START);
+}
 static int __init constructor(void)
 {
 	register_notification_item(&no_item);
@@ -88,11 +95,7 @@ static int __init constructor(void)
 
 static void __exit destructor(void)
 {
-	volatile void *gpio_cleardataout;
-	gpio_cleardataout = ioremap(GPIO_CLEARDATAOUT, BITS);
-	write_to_mem(gpio_cleardataout, GPIO14);
-	iounmap(gpio_cleardataout);
-	release_mem_region(GPIO1_START, GPIO1_END - GPIO1_START);
+	clear();
 }
 
 module_init(constructor);
